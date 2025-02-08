@@ -49,16 +49,13 @@ def construct_feature_vector(params):
 
     Returns
     -------
-    np.ndarray
-        Feature vector ready for model prediction.
+    pd.DataFrame
+        DataFrame with one row, ordered by feature indices.
     """
-    feature_vector = np.zeros(len(feature_indices))  # Initialize vector with zeros
+    ordered_features = [feature for feature, _ in sorted(feature_indices.items(), key=lambda item: item[1])]
+    feature_values = [params.get(feature, 0) for feature in ordered_features]  # Default to 0 if missing
     
-    for feature, index in feature_indices.items():
-        if feature in params:
-            feature_vector[index] = params[feature]  # Assign value at correct index
-    
-    return feature_vector.reshape(1, -1)  # Reshape for model input
+    return pd.DataFrame([feature_values], columns=ordered_features)
 
 def predict(params):
     """
@@ -76,7 +73,7 @@ def predict(params):
     """
     try:
         feature_vector = construct_feature_vector(params)
-        prediction = model.predict(feature_vector)[0]  # Get the prediction
+        prediction = model.predict(feature_vector) # Get the prediction
         print(f"Prediction: {prediction}")
         return prediction
     except Exception as e:
