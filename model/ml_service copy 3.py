@@ -96,22 +96,21 @@ def predict(params, model):
         feature_vector = construct_feature_vector(params)
 
         if isinstance(model, xgb.Booster):
+            # Convert DataFrame to DMatrix for Booster models
             dmatrix = xgb.DMatrix(feature_vector)
             prediction = model.predict(dmatrix)
-            return float(prediction[0]), None
-        elif isinstance(model, xgb.XGBClassifier):
-            probabilities = model.predict_proba(feature_vector)
-            predicted_class = int(np.argmax(probabilities, axis=1)[0])
-            probability = float(np.max(probabilities))
-            return predicted_class, probability
-        elif isinstance(model, xgb.XGBRegressor):
+        elif isinstance(model, (xgb.XGBClassifier, xgb.XGBRegressor)):
+            # Use feature_vector directly for sklearn models
             prediction = model.predict(feature_vector)
-            return float(prediction[0]), None
         else:
             raise TypeError("Unsupported model type.")
+
+        prediction_value = float(prediction[0])  # Ensure JSON serialization
+        print(f"Prediction: {prediction_value}")
+        return prediction_value
     except Exception as e:
         print(f"Error during prediction: {e}")
-        return None, None
+        return None
 
 def classify_process():
     """
