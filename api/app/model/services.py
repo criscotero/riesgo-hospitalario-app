@@ -58,11 +58,6 @@ async def model_predict(predict_request: PredictRequest):
         "r5weight": predict_request.r5weight,
         "r5bmi": predict_request.r5bmi,  # Automatically calculated BMI from PredictRequest
     }
-
-
-
-
-
     # Initialize aioredis connection
     redis = Redis(
         host=settings.REDIS_IP,

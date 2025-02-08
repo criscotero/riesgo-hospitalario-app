@@ -24,7 +24,7 @@ async def predict(request: PredictRequest,database: Session = Depends(db.get_db)
     try:
         prediction, score = await model_predict(request)
         rpse["success"] = True      
-        rpse["score"] = "0.9346"
+        rpse["score"] = prediction
         rpse["feedback"] = "Take care of the dog"
         survey = PredictResponse(
            success = rpse["success"],           
