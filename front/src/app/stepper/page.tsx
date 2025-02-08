@@ -2,10 +2,10 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import HealthStatus from '../components/Stepper/healthStatus';
-import CognitiveFunction from '../components/Stepper/cognitiveFunction';
 import WealthStatus from '../components/Stepper/wealthStatus';
 import GeneralInformation from '../components/Stepper/generalInformation';
 import { useFormStore } from '../store/formStore';
+import Accident from '../components/Stepper/accident';
 
 export default function HospitalizationForm() {
   const router = useRouter()
@@ -13,9 +13,6 @@ export default function HospitalizationForm() {
   const { formData, setFormData } = useFormStore();
 
   const handleNext = () => {
-    // Update form data with the current form values
-    //setFormData((prevData: unknown) => ({ ...prevData, ...formValues }));
-     //console.log(formValues)
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
       console.log(formData)
@@ -27,17 +24,19 @@ export default function HospitalizationForm() {
         setCurrentStep(currentStep - 1);
       }
     };
+    const submitted = () => {
+      console.dir(formData)
+      //router.push(`/score?score=70`);
+    }
   const steps = [
     { id: 1, name: 'General Information', component: <GeneralInformation handleNext={handleNext} /> },
     { id: 2, name: 'Physical Health & Mobility', component: <HealthStatus handleBack={handleBack} handleNext={handleNext} /> },
-    { id: 3, name: 'Cognitive Function', component: <CognitiveFunction /> },
+    { id: 3, name: 'Cognitive Function', component: <Accident handleBack={handleBack} submitted={submitted} /> },
     { id: 4, name: 'Wealth Status', component: <WealthStatus /> },
 
   ];
 
-  const submitted = () => {
-    router.push(`/score?score=70`);
-  }
+
 
 
   return (
@@ -88,79 +87,3 @@ export default function HospitalizationForm() {
   );
 }
 
-// Step 1: Health Status
-/* function HealthStatus() {
-  return (
-    <div >
-      <h2 className="text-xl font-semibold mb-4">Health Status</h2>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Self-report of health change
-        </label>
-        <select className="w-full border rounded-lg p-2 mt-1">
-          <option>Somewhat worse</option>
-          <option>Same</option>
-          <option>Somewhat better</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Height in meters
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded-lg p-2 mt-1"
-          placeholder="0.00"
-        />
-      </div>
-    </div>
-  );
-} */
-
-// Step 2: Cognitive Function
-/* function CognitiveFunction() {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">Cognitive Function</h2>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Memory rating (1-10)
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded-lg p-2 mt-1"
-          placeholder="0"
-        />
-      </div>
-    </div>
-  );
-} */
-
-// Step 3: Wealth Status
-/* function WealthStatus() {
-  return (
-    <div>
-      <h2 className="text-xl font-semibold mb-4">Wealth Status</h2>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Number of health insurance plans
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded-lg p-2 mt-1"
-          placeholder="0"
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Annual income (USD)
-        </label>
-        <input
-          type="number"
-          className="w-full border rounded-lg p-2 mt-1"
-          placeholder="0.00"
-        />
-      </div>
-    </div>
-  );
-} */

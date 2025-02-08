@@ -14,4 +14,6 @@ export interface FormFields {
   r5mobilsev: number;  // Corresponds to values 0 to 7
   r5uppermob: number;  // Corresponds to values 0 to 3
   r5lowermob: number;  // Corresponds to values 0 to 4
+
+  r5fallnum: number;
 }
