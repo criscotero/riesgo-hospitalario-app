@@ -37,7 +37,7 @@ export default function HospitalizationForm() {
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
         {/* Fixed Title */}
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Hospitalization Prediction Form
+          Hospitalization Prediction Form 1
         </h1>
 
         {/* Fixed Stepper Header */}
