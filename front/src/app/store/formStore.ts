@@ -15,7 +15,7 @@ interface FormState {
     age: 0,
     r5height: 0,
     r5weight: 0,
-    r5bmi: 0,
+   
   };
   
   export const useFormStore = create<FormState>()(

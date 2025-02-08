@@ -1,26 +1,29 @@
 
 //import { useFormStore } from "@/app/store/formStore";
+import { useFormStore } from "@/app/store/formStore";
 import { useForm } from "react-hook-form";
-interface GeneralInformationProps {
+interface Props {
     handleNext: () => void
   }
-export default function GeneralInformation({ handleNext }: GeneralInformationProps) {
+export default function GeneralInformation({ handleNext }:Props) {
   
-  //const { formData, setFormData } = useFormStore();
+  const { formData, setFormData } = useFormStore();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     getValues,
   } = useForm();
 
 
   const onSubmit = () => {
-    //const formValues = getValues() // Get all the form values
-    //handleNext(formValues, isValid) //
-    //const formValues = getValues(); // Get all the form values
-    //handleNext(formValues); // Pass form values to handleNext
-    handleNext()
+    const formValues = getValues();
+    setFormData({
+        ...formData,
+        ...formValues,
+      });
+      handleNext();
+    
   };
 
   return (
@@ -140,38 +143,19 @@ export default function GeneralInformation({ handleNext }: GeneralInformationPro
           )}
         </div>
 
-        {/* BMI */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            BMI (kg/m²)
-          </label>
-          <input
-            {...register("r5bmi", { required: "BMI is required" })}
-            className={`w-full px-3 py-2 border rounded-lg ${
-              errors.r5bmi ? "border-red-500" : "border-gray-300"
-            }`}
-            type="number"
-            step="0.01"
-            placeholder="Enter your BMI"
-          />
-          {(errors.r5bmi != null) && (
-            <p className="text-red-500">{`${errors.r5bmi.message}`}</p>
-          )}
-        </div>
+  
       </div>
 
-         {/* Navigation Buttons */}
-         <div className="flex justify-between">
-      
-      
-            <button
-             type="submit"              
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Next
-            </button>
-          
-        </div>
+        
+        {/* Navigation Buttons */}
+        <div className="flex justify-end mt-4">
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Next
+        </button>
+      </div>
     </form>
   );
 }

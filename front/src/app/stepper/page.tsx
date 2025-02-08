@@ -18,11 +18,18 @@ export default function HospitalizationForm() {
      //console.log(formValues)
     if (currentStep < steps.length) {
       setCurrentStep(currentStep + 1);
+      console.log(formData)
     }
   };
+    // Function to validate and move to next step
+    const handleBack = () => {
+      if (currentStep > 1) {
+        setCurrentStep(currentStep - 1);
+      }
+    };
   const steps = [
     { id: 1, name: 'General Information', component: <GeneralInformation handleNext={handleNext} /> },
-    { id: 2, name: 'Health Status', component: <HealthStatus /> },
+    { id: 2, name: 'Physical Health & Mobility', component: <HealthStatus handleBack={handleBack} handleNext={handleNext} /> },
     { id: 3, name: 'Cognitive Function', component: <CognitiveFunction /> },
     { id: 4, name: 'Wealth Status', component: <WealthStatus /> },
 
@@ -31,12 +38,7 @@ export default function HospitalizationForm() {
   const submitted = () => {
     router.push(`/score?score=70`);
   }
-  // Function to validate and move to next step
-  const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
