@@ -19,6 +19,10 @@ class PredictRequest(BaseModel):
     r5uppermob: int  # Corresponds to values 0 to 3
     r5lowermob: int  # Corresponds to values 0 to 4
     r5fallnum: int #More than 0
+    @property
+    def r5bmi(self) -> float:
+        """Calculate Body Mass Index (BMI)."""
+        return self.r5weight / (self.r5height ** 2) if self.r5height > 0 else 0.0  # Handle division by zero
 
 
 

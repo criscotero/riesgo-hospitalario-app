@@ -141,23 +141,9 @@
         "values": "Integer (0 or more)",
         "input_index": 0
       }
-    },
-  
-    "Anthropometric Measurements": {
-      "r5bmi": {
-        "description": "Body Mass Index (kg/m²)",
-        "values": "Float (kg/m²)",
-        "input_index": 12
-      },
-      "r5height": {
-        "description": "Height in meters",
-        "values": "Float (meters)",
-        "input_index": 8
-      },
-      "r5weight": {
-        "description": "Weight in kilograms",
-        "values": "Float (kg)",
-        "input_index": 11
-      }
     }
   }
+
+
+
+

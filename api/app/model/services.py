@@ -5,7 +5,7 @@ import uuid
 import redis
 from aioredis import Redis
 from .. import settings
-
+from app.model.schema import PredictRequest, PredictResponse
 # TODO
 # Connect to Redis and assign to variable `db``
 # Make use of settings.py module to get Redis settings like host, port, etc.
@@ -15,9 +15,9 @@ from .. import settings
     db=settings.REDIS_DB_ID)
  """
 
-async def model_predict(image_name):
+async def model_predict(predict_request: PredictRequest):
     
-    print(f"Processing image {image_name}...")
+    print(f"Processing {predict_request}...")
     """
     Receives an image name and queues the job into Redis.
     Will loop until getting the answer from our ML service.
@@ -33,7 +33,7 @@ async def model_predict(image_name):
         Model predicted class as a string and the corresponding confidence
         score as a number.
     """
-    print(f"Processing image {image_name}...")
+   
     prediction = None
     score = None
 
@@ -41,10 +41,36 @@ async def model_predict(image_name):
     job_id = str(uuid.uuid4())  # Generate a unique job ID
 
     # Step 2: Create a dictionary with the job data
+     # Step 2: Create a dictionary with the job data, including the image name and prediction request
     job_data = {
         "id": job_id,
-        "image_name": image_name,
+        "r5fallnum": predict_request.r5fallnum,
+        "r5uppermob": predict_request.r5uppermob,
+        "r5grossa": predict_request.r5grossa,
+        "r5lowermob": predict_request.r5lowermob,
+        "r5mobilsev": predict_request.r5mobilsev,
+        "r5adltot6": predict_request.r5adltot6,
+
+        "age": predict_request.age,
+        "r5height": predict_request.r5height,
+        "r5weight": predict_request.r5weight,
+        "r5adla": predict_request.r5adla,
+        "r5nagi8": predict_request.r5nagi8,        
+        "r5iadlfour": predict_request.r5iadlfour,
+        
+        "r5grossa": predict_request.r5grossa,
+        
+        
+        
+        
+        "r5bmi": predict_request.r5bmi,  # Automatically calculated BMI from PredictRequest
     }
+
+ 
+
+
+
+  
 
     # Initialize aioredis connection
     redis = Redis(

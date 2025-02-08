@@ -22,7 +22,7 @@ async def predict(request: PredictRequest,database: Session = Depends(db.get_db)
  
     # Step 3: Process the file with the model service
     try:
-        # prediction, score = await model_predict(file_hash)
+        prediction, score = await model_predict(request)
         rpse["success"] = True      
         rpse["score"] = "0.9346"
         rpse["feedback"] = "Take care of the dog"
@@ -41,4 +41,4 @@ async def predict(request: PredictRequest,database: Session = Depends(db.get_db)
         )
 
     # Step 4: Return the response
-    return rpse
+    return request.r5bmi
