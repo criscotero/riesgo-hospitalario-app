@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import redis
 import settings
+import xgboost as xgb
 
 # Connect to Redis
 print("Connecting to Redis...")
@@ -57,7 +58,7 @@ def construct_feature_vector(params):
     
     return pd.DataFrame([feature_values], columns=ordered_features)
 
-def predict(params):
+def predict(params, model):
     """
     Predict the class using the XGBoost model based on the input parameters.
 
@@ -66,16 +67,29 @@ def predict(params):
     params : dict
         Dictionary containing input parameters.
 
+    model : xgb.Booster or trained XGBoost model
+        Pretrained XGBoost model.
+
     Returns
     -------
     prediction : float
-        Model predicted value.
+        Model predicted value, converted to a standard Python type.
     """
     try:
+        # Construct feature vector
         feature_vector = construct_feature_vector(params)
-        prediction = model.predict(feature_vector) # Get the prediction        
-        print(f"Prediction: {prediction}")
-        return prediction
+
+        # Convert to DMatrix (required for XGBoost)
+        dmatrix = xgb.DMatrix(feature_vector)
+
+        # Make the prediction
+        prediction = model.predict(dmatrix)
+
+        # Convert to float (ensure JSON serializability)
+        prediction_value = float(prediction[0])
+
+        print(f"Prediction: {prediction_value}")
+        return prediction_value
     except Exception as e:
         print(f"Error during prediction: {e}")
         return None
