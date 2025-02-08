@@ -36,8 +36,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <h2 className="text-xl font-semibold mb-4">Health Status</h2>
-
+     
       <div>
         <label className="block text-sm font-medium text-gray-700">
           Self-report of health change
