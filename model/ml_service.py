@@ -73,7 +73,7 @@ def predict(params):
     """
     try:
         feature_vector = construct_feature_vector(params)
-        prediction = model.predict(feature_vector) # Get the prediction
+        prediction = model.predict(feature_vector) # Get the prediction        
         print(f"Prediction: {prediction}")
         return prediction
     except Exception as e:
@@ -94,7 +94,22 @@ def classify_process():
             
             # Extract job ID and parameters
             job_id = msg["id"]
-            params = msg["params"]
+            
+            params = {
+             "r5fallnum": msg["r5fallnum"],
+             "r5uppermob": msg["r5uppermob"],
+             "r5grossa": msg["r5grossa"],
+             "r5lowermob": msg["r5lowermob"],
+             "r5mobilsev": msg["r5mobilsev"],
+             "r5adltot6": msg["r5adltot6"],
+             "r5nagi8": msg["r5nagi8"],
+             "r5iadlfour": msg["r5iadlfour"],
+             "r5height": msg["r5height"],
+             "r5adla": msg["r5adla"],
+             "r5agey": msg["r5agey"],
+             "r5weight": msg["r5weight"],
+             "r5bmi": msg["r5bmi"]
+            }
             
             # Make prediction
             prediction = predict(params)
