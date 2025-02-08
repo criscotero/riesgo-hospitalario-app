@@ -50,27 +50,18 @@ async def model_predict(predict_request: PredictRequest):
         "r5lowermob": predict_request.r5lowermob,
         "r5mobilsev": predict_request.r5mobilsev,
         "r5adltot6": predict_request.r5adltot6,
-
-        "age": predict_request.age,
-        "r5height": predict_request.r5height,
-        "r5weight": predict_request.r5weight,
-        "r5adla": predict_request.r5adla,
-        "r5nagi8": predict_request.r5nagi8,        
+        "r5nagi8": predict_request.r5nagi8, 
         "r5iadlfour": predict_request.r5iadlfour,
-        
-        "r5grossa": predict_request.r5grossa,
-        
-        
-        
-        
+        "r5height": predict_request.r5height,
+        "r5adla": predict_request.r5adla,
+        "r5agey": predict_request.age,
+        "r5weight": predict_request.r5weight,
         "r5bmi": predict_request.r5bmi,  # Automatically calculated BMI from PredictRequest
     }
 
- 
 
 
 
-  
 
     # Initialize aioredis connection
     redis = Redis(

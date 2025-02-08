@@ -146,4 +146,32 @@
 
 
 
+  {
 
+    "r5fallnum": 0,
+
+    "r5uppermob": 1,
+
+    "r5grossa": 2,
+
+    "r5lowermob": 3,
+
+    "r5mobilsev": 4,
+
+    "r5adltot6": 5,
+
+    "r5nagi8": 6,
+
+    "r5iadlfour": 7,
+
+    "r5height": 8,
+
+    "r5adla": 9,
+
+    "r5agey": 10,
+
+    "r5weight": 11,
+
+    "r5bmi": 12
+
+  }
