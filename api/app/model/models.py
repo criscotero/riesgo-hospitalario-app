@@ -12,8 +12,7 @@ class Survey(Base):
    
 
     def __init__(
-        self, score, predicted_class, feedback, *args, **kwargs
-    ):
-        self.predicted_class = predicted_class
+        self, score, feedback, *args, **kwargs
+    ):        
         self.feedback = feedback
         self.score = score

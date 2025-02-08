@@ -1,4 +1,4 @@
-from api.app.model.schema import PredictResponse
+from app.model.schema import PredictResponse
 from sqlalchemy.orm import Session
 from . import models, schema
 async def new_survey(

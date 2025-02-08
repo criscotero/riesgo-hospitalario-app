@@ -6,7 +6,7 @@ class PredictRequest(BaseModel):
 
 
 class PredictResponse(BaseModel):
-    success: bool
-    prediction: str
+    success: bool    
     score: float
+    feedback:str
     name:str

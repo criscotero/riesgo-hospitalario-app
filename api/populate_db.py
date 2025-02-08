@@ -2,7 +2,8 @@ import psycopg2
 from app import settings as config
 from app.db import Base
 from app.feedback.models import Feedback
-from app.user.models import User
+from app.feedback.models import Feedback
+from app.model.models import Survey
 from psycopg2.errors import DuplicateDatabase
 from sqlalchemy import create_engine
 from sqlalchemy.exc import ProgrammingError
