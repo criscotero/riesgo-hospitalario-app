@@ -2,6 +2,7 @@ import json
 import os
 import time
 import pickle
+import signal
 
 import numpy as np
 import pandas as pd
@@ -9,7 +10,16 @@ import redis
 import settings
 import xgboost as xgb
 
-# Connect to Redis
+# Graceful Shutdown Handling
+running = True
+def shutdown_handler(signum, frame):
+    global running
+    print("Shutting down classify_process...")
+    running = False
+
+signal.signal(signal.SIGINT, shutdown_handler)
+
+# Redis Connection
 print("Connecting to Redis...")
 db = redis.Redis(
     host=settings.REDIS_IP,
@@ -24,116 +34,65 @@ except redis.ConnectionError as e:
     print(f"Failed to connect to Redis: {e}")
     exit(1)
 
-# Load the XGBoost model
+# Load ML Model
 print("Loading ML model...")
 model_path = os.path.join("resources", "xgb_model.pkl")
 with open(model_path, "rb") as model_file:
     model = pickle.load(model_file)
 print("Model loaded successfully!")
 
-# Load the feature indices dictionary
+# Load Feature Indices
 print("Loading feature indices...")
 feature_indices_path = os.path.join("resources", "feature_indices.pkl")
 with open(feature_indices_path, "rb") as indices_file:
     feature_indices = pickle.load(indices_file)
 print("Feature indices loaded successfully!")
 
+# Construct Feature Vector
 def construct_feature_vector(params):
-    """
-    Construct a feature vector based on the provided parameters
-    and the predefined feature indices.
-
-    Parameters
-    ----------
-    params : dict
-        Dictionary containing feature names and values.
-
-    Returns
-    -------
-    pd.DataFrame
-        DataFrame with one row, ordered by feature indices.
-    """
     ordered_features = [feature for feature, _ in sorted(feature_indices.items(), key=lambda item: item[1])]
-    feature_values = [params.get(feature, 0) for feature in ordered_features]  # Default to 0 if missing
-    
+    feature_values = [params.get(feature, 0) for feature in ordered_features]  # Default 0 for missing
     return pd.DataFrame([feature_values], columns=ordered_features)
 
+# Predict Function
 def predict(params, model):
-    """
-    Predict the class using the XGBoost model based on the input parameters.
-
-    Parameters
-    ----------
-    params : dict
-        Dictionary containing input parameters.
-
-    model : xgb.Booster or trained XGBoost model
-        Pretrained XGBoost model.
-
-    Returns
-    -------
-    prediction : float
-        Model predicted value, converted to a standard Python type.
-    """
     try:
-        # Construct feature vector
         feature_vector = construct_feature_vector(params)
-
-        # Convert to DMatrix (required for XGBoost)
         dmatrix = xgb.DMatrix(feature_vector)
-
-        # Make the prediction
         prediction = model.predict(dmatrix)
-
-        # Convert to float (ensure JSON serializability)
-        prediction_value = float(prediction[0])
-
+        prediction_value = float(prediction[0])  # Ensure JSON serializability
         print(f"Prediction: {prediction_value}")
         return prediction_value
     except Exception as e:
         print(f"Error during prediction: {e}")
         return None
 
+# Job Processing
 def classify_process():
-    """
-    Process jobs from Redis queue, make predictions, and store results.
-    """
-    while True:
+    while running:
         try:
-            # Fetch a job from Redis
-            msg_json = db.brpop(settings.REDIS_QUEUE)
+            msg_json = db.brpop(settings.REDIS_QUEUE, timeout=10)
+            if msg_json is None:
+                print("No jobs found, retrying...")
+                continue
+            
             _, message = msg_json
             msg = json.loads(message.decode('utf-8'))
             print(f"Processing job: {msg}")
+
+            job_id = msg.get("id", "unknown_job")
+            params = {key: msg.get(key, 0) for key in feature_indices}
+
+            prediction = predict(params, model)
             
-            # Extract job ID and parameters
-            job_id = msg["id"]
-            
-            params = {
-             "r5fallnum": msg["r5fallnum"],
-             "r5uppermob": msg["r5uppermob"],
-             "r5grossa": msg["r5grossa"],
-             "r5lowermob": msg["r5lowermob"],
-             "r5mobilsev": msg["r5mobilsev"],
-             "r5adltot6": msg["r5adltot6"],
-             "r5nagi8": msg["r5nagi8"],
-             "r5iadlfour": msg["r5iadlfour"],
-             "r5height": msg["r5height"],
-             "r5adla": msg["r5adla"],
-             "r5agey": msg["r5agey"],
-             "r5weight": msg["r5weight"],
-             "r5bmi": msg["r5bmi"]
-            }
-            
-            # Make prediction
-            prediction = predict(params)
-            
-            # Store results in Redis
-            result = json.dumps({"prediction": prediction})
+            result = json.dumps({"prediction": prediction if prediction is not None else "Error"})
             db.set(job_id, result)
             print(f"Stored result for job {job_id}: {result}")
             
             time.sleep(settings.SERVER_SLEEP)
+        except redis.exceptions.ConnectionError as e:
+            print(f"Redis connection lost: {e}")
+            time.sleep(5)
         except Exception as e:
             print(f"Error in classify_process loop: {e}")
 
