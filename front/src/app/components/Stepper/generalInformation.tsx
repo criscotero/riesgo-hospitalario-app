@@ -92,7 +92,7 @@ export default function GeneralInformation({ handleNext }:Props) {
           <input
             {...register("age", {
               required: "Age is required",
-              min: { value: 1, message: "Age must be greater than 0" },
+              min: { value: 50, message: "Age must be equal or greater than 50" },
             })}
             className={`w-full px-3 py-2 border rounded-lg ${
               errors.age ? "border-red-500" : "border-gray-300"

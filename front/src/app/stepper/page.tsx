@@ -31,8 +31,8 @@ export default function HospitalizationForm() {
   const steps = [
     { id: 1, name: 'General Information', component: <GeneralInformation handleNext={handleNext} /> },
     { id: 2, name: 'Physical Health & Mobility', component: <HealthStatus handleBack={handleBack} handleNext={handleNext} /> },
-    { id: 3, name: 'Cognitive Function', component: <Accident handleBack={handleBack} submitted={submitted} /> },
-    { id: 4, name: 'Wealth Status', component: <WealthStatus /> },
+    { id: 3, name: 'Accidents & Risk Factors', component: <Accident handleBack={handleBack} submitted={submitted} /> },
+
 
   ];
 
