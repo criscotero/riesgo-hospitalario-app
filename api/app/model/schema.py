@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 
 class PredictRequest(BaseModel):
-    file: str
+    name: str
 
 
 class PredictResponse(BaseModel):
     success: bool
     prediction: str
     score: float
-    image_file_name: str
+    name:str
