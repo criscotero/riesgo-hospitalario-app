@@ -210,4 +210,11 @@ cd stress_test/
 python -m venv lenv
 activate lvenv/Scripts/activate
 pip install locust
-locust -f locustfile.py
+locust -f locustfile.
+
+
+# Data to the stepper
+
+*Nombre 
+*Apellido
+*Edad 

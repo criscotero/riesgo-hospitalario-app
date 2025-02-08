@@ -4,27 +4,34 @@ import { useState } from 'react';
 import HealthStatus from '../components/Stepper/healthStatus';
 import CognitiveFunction from '../components/Stepper/cognitiveFunction';
 import WealthStatus from '../components/Stepper/wealthStatus';
+import GeneralInformation from '../components/Stepper/generalInformation';
+import { useFormStore } from '../store/formStore';
 
 export default function HospitalizationForm() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1);
+  const { formData, setFormData } = useFormStore();
 
+  const handleNext = () => {
+    // Update form data with the current form values
+    //setFormData((prevData: unknown) => ({ ...prevData, ...formValues }));
+     //console.log(formValues)
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
   const steps = [
-    { id: 1, name: 'Health Status', component: <HealthStatus /> },
-    { id: 2, name: 'Cognitive Function', component: <CognitiveFunction /> },
-    { id: 3, name: 'Wealth Status', component: <WealthStatus /> },
+    { id: 1, name: 'General Information', component: <GeneralInformation handleNext={handleNext} /> },
+    { id: 2, name: 'Health Status', component: <HealthStatus /> },
+    { id: 3, name: 'Cognitive Function', component: <CognitiveFunction /> },
+    { id: 4, name: 'Wealth Status', component: <WealthStatus /> },
 
   ];
 
   const submitted = () => {
     router.push(`/score?score=70`);
   }
-  const handleNext = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
+  // Function to validate and move to next step
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
@@ -37,7 +44,7 @@ export default function HospitalizationForm() {
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
         {/* Fixed Title */}
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Hospitalization Prediction Form 1
+          Hospitalization Prediction Form 
         </h1>
 
         {/* Fixed Stepper Header */}
@@ -73,35 +80,7 @@ export default function HospitalizationForm() {
           {steps[currentStep - 1].component}
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="flex justify-between">
-          <button
-            onClick={handleBack}
-            disabled={currentStep === 1}
-            className={`px-4 py-2 rounded ${
-              currentStep === 1
-                ? 'bg-gray-300 cursor-not-allowed'
-                : 'bg-blue-500 hover:bg-blue-600 text-white'
-            }`}
-          >
-            Back
-          </button>
-          {currentStep === steps.length ? (
-            <button
-              onClick={() => submitted()}
-              className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-            >
-              Submit
-            </button>
-          ) : (
-            <button
-              onClick={handleNext}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-            >
-              Next
-            </button>
-          )}
-        </div>
+     
       </div>
     </div>
   );

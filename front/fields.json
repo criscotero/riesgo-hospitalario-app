@@ -1,0 +1,163 @@
+{
+    "General Information": {
+      "FirstName": {
+        "description": "First name of the patient",
+        "values": "Text/String"
+      },
+      "LastName": {
+        "description": "Last name of the patient",
+        "values": "Text/String"
+      },
+      "Identification": {
+        "description": "Unique identification number",
+        "values": "Alphanumeric/String"
+      },
+      "Age": {
+        "description": "Age of the individual",
+        "values": "Integer (years)",
+        "input_index": 10
+      },
+      "r5height": {
+        "description": "Height in meters",
+        "values": "Float (meters)",
+        "input_index": 8
+      },
+      "r5weight": {
+        "description": "Weight in kilograms",
+        "values": "Float (kg)",
+        "input_index": 11
+      },
+      "r5bmi": {
+        "description": "Body Mass Index (kg/m²)",
+        "values": "Float",
+        "input_index": 12
+      }
+    },
+  
+    "Physical Health & Mobility": {
+      "r5adla": {
+        "description": "ADLs (Activities of Daily Living) include:\n- Bathing\n- Dressing\n- Eating\n- Toileting\n- Transferring (e.g., getting in/out of bed)\n\nHigher values indicate greater difficulty, increasing hospitalization risk.",
+        "values": {
+          "0": "No difficulty with ADLs",
+          "1": "Some difficulty with one ADL",
+          "2": "Some difficulty with two ADLs",
+          "3": "Some difficulty with three ADLs",
+          "4": "Some difficulty with four ADLs",
+          "5": "Some difficulty with all five ADLs"
+        },
+        "input_index": 9
+      },
+      "r5adltot6": {
+        "description": "ADLs (Activities of Daily Living) include:\n1. Bathing\n2. Dressing\n3. Eating\n4. Toileting (using the restroom)\n5. Transferring (e.g., getting in/out of bed)\n6. Continence (control over bladder/bowel function)\n\nHigher values indicate greater difficulty, increasing hospitalization and long-term care needs.",
+        "values": {
+          "0": "No difficulty with ADLs",
+          "1": "Some difficulty with one ADL",
+          "2": "Some difficulty with two ADLs",
+          "3": "Some difficulty with three ADLs",
+          "4": "Some difficulty with four ADLs",
+          "5": "Some difficulty with five ADLs",
+          "6": "Some difficulty with all six ADLs"
+        },
+        "input_index": 5
+      },
+      "r5iadlfour": {
+        "description": "IADLs (Instrumental Activities of Daily Living) include:\n1. Managing medications\n2. Shopping for groceries and essentials\n3. Handling transportation (driving/public transport)\n4. Managing finances (paying bills, budgeting)\n\nHigher values indicate greater difficulty, increasing dependency and hospitalization risk.",
+        "values": {
+          "0": "No difficulty with IADLs",
+          "1": "Some difficulty with one IADL",
+          "2": "Some difficulty with two IADLs",
+          "3": "Some difficulty with three IADLs",
+          "4": "Some difficulty with all four IADLs"
+        },
+        "input_index": 7
+      },
+      "r5nagi8": {
+        "description": "The NAGI Disability Scale assesses physical function limitations and includes:\n1. Walking a short distance\n2. Climbing stairs\n3. Stooping, kneeling, or crouching\n4. Lifting or carrying heavy objects\n5. Reaching overhead\n6. Pushing or pulling large objects\n7. Standing for long periods\n8. Sitting for long periods\n\nHigher scores indicate more significant physical limitations and a greater risk of hospitalization or disability.",
+        "values": {
+          "0": "No difficulty with NAGI tasks",
+          "1": "Some difficulty with one NAGI task",
+          "2": "Some difficulty with two NAGI tasks",
+          "3": "Some difficulty with three NAGI tasks",
+          "4": "Some difficulty with four NAGI tasks",
+          "5": "Some difficulty with five NAGI tasks",
+          "6": "Some difficulty with six NAGI tasks",
+          "7": "Some difficulty with seven NAGI tasks",
+          "8": "Some difficulty with all eight NAGI tasks"
+        },
+        "input_index": 6
+      },
+      "r5grossa": {
+        "description": "The Gross Motor Scale assesses major movement-related limitations.",
+        "values": {
+          "0": "No difficulty with gross motor tasks",
+          "1": "Some difficulty with one gross motor task",
+          "2": "Some difficulty with two gross motor tasks",
+          "3": "Some difficulty with three gross motor tasks",
+          "4": "Some difficulty with four gross motor tasks",
+          "5": "Some difficulty with all five gross motor tasks"
+        },
+        "input_index": 2
+      },
+      "r5mobilsev": {
+        "description": "The 7-item Mobility Scale assesses difficulties in essential mobility functions.",
+        "values": {
+          "0": "No difficulty with mobility tasks",
+          "1": "Some difficulty with one mobility task",
+          "2": "Some difficulty with two mobility tasks",
+          "3": "Some difficulty with three mobility tasks",
+          "4": "Some difficulty with four mobility tasks",
+          "5": "Some difficulty with five mobility tasks",
+          "6": "Some difficulty with six mobility tasks",
+          "7": "Some difficulty with all seven mobility tasks"
+        },
+        "input_index": 4
+      },
+      "r5uppermob": {
+        "description": "The Upper Body Mobility Scale assesses difficulties in upper body movement.",
+        "values": {
+          "0": "No difficulty with upper body mobility",
+          "1": "Some difficulty with one upper body mobility task",
+          "2": "Some difficulty with two upper body mobility tasks",
+          "3": "Some difficulty with all upper body mobility tasks"
+        },
+        "input_index": 1
+      },
+      "r5lowermob": {
+        "description": "The Lower Body Mobility Scale assesses difficulties in lower body movement.",
+        "values": {
+          "0": "No difficulty with lower body mobility",
+          "1": "Some difficulty with one lower body mobility task",
+          "2": "Some difficulty with two lower body mobility tasks",
+          "3": "Some difficulty with three lower body mobility tasks",
+          "4": "Some difficulty with all lower body mobility tasks"
+        },
+        "input_index": 3
+      }
+    },
+  
+    "Accidents & Risk Factors": {
+      "r5fallnum": {
+        "description": "Number of falls in a given period",
+        "values": "Integer (0 or more)",
+        "input_index": 0
+      }
+    },
+  
+    "Anthropometric Measurements": {
+      "r5bmi": {
+        "description": "Body Mass Index (kg/m²)",
+        "values": "Float (kg/m²)",
+        "input_index": 12
+      },
+      "r5height": {
+        "description": "Height in meters",
+        "values": "Float (meters)",
+        "input_index": 8
+      },
+      "r5weight": {
+        "description": "Weight in kilograms",
+        "values": "Float (kg)",
+        "input_index": 11
+      }
+    }
+  }
