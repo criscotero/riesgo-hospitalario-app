@@ -1,9 +1,7 @@
 import psycopg2
 from app import settings as config
 from app.db import Base
-from app.feedback.models import Feedback
-from app.feedback.models import Feedback
-from app.model.models import Survey
+from app.model.models import Patient
 from psycopg2.errors import DuplicateDatabase
 from sqlalchemy import create_engine
 from sqlalchemy.exc import ProgrammingError
@@ -55,21 +53,33 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 Base.metadata.drop_all(engine)
 print("Tables dropped")
 
-# Create all tables
-Base.metadata.create_all(engine)
-print("Tables created")
-
-# Populate database with a default user
-print("Populating database with default user")
+# Populate database with a default patient
+print("Populating database with default patient")
 Session = sessionmaker(bind=engine)
 session = Session()
 
-user = User(
-    name="Admin User",
-    password="admin",
-    email="admin@example.com",
+
+patient = Patient(
+    redis_job_id="job_1234567890",
+    first_name="John",
+    last_name="Doe",
+    identification="ABC123456",
+    age=45,
+    r5height=1.75,
+    r5weight=70.5,
+    r5adla=2,
+    r5adltot6=3,
+    r5iadlfour=1,
+    r5nagi8=4,
+    r5grossa=2,
+    r5mobilsev=5,
+    r5uppermob=1,
+    r5lowermob=3,
+    r5fallnum=0,
+    predicted_class=0,
+    predicted_score=0.89,
 )
 
-session.add(user)
+session.add(patient)
 session.commit()
-print("Default user added")
+print("Default patient added")

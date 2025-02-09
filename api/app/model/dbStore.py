@@ -1,35 +1,52 @@
-from app.model.schema import PredictResponse
+from app.model.schema import PredictRequest
 from sqlalchemy.orm import Session
 from . import models, schema
-async def new_survey(
-    request: PredictResponse, database: Session
-) -> models.Survey:
-    """
-    Adds new feedback to the database associated with the current user.
 
-    This asynchronous function creates a new feedback entry in the database using
-    the provided feedback data and associates it with the current user. It first
-    retrieves the user from the database based on the email in the `current_user` object,
-    then creates and stores the new feedback entry.
+async def new_patient_prediction(
+     request: PredictRequest, database: Session, predicted_class: int, predicted_score: float, job_id: str
+) -> models.Patient:
+    """
+    Adds a new patient record to the database and assigns a Redis job ID.
+
+    This asynchronous function creates a new patient entry in the database using
+    the provided prediction request data. The function assigns a unique Redis job ID,
+    initializes the patient's health metrics, and stores the data in the database.
 
     Args:
-        request (schema.Feedback): An object containing the feedback details such as score,
-                                   image file name, predicted class, and feedback text.
-        current_user (TokenData): An object containing the email of the currently authenticated user.
-        database (Session): The database session used for querying and committing changes to the database.
+        request (PredictRequest): The patient details.
+        database (Session): The database session.
+        predicted_class (int): The ML-predicted class.
+        predicted_score (float): The confidence score of the prediction.
 
     Returns:
-        models.Feedback: The newly created feedback entry stored in the database.
+        models.Patient: The newly created patient entry stored in the database.
 
     Raises:
-        Exception: If there is an issue with adding or committing the feedback to the database.
+        Exception: If there is an issue with adding or committing the patient to the database.
     """
     
-    new_survey = models.Survey(
-        score=request.score, 
-        feedback=request.feedback,
+    new_patient = models.Patient(
+        redis_job_id="job_1234567890",
+        first_name=request.firstName,
+        last_name=request.lastName,  
+        identification=request.identification,
+        age=request.age,
+        r5height=request.r5height,
+        r5weight=request.r5weight,
+        r5adla=request.r5adla,
+        r5adltot6=request.r5adltot6,
+        r5iadlfour=request.r5iadlfour,
+        r5nagi8=request.r5nagi8,
+        r5grossa=request.r5grossa,
+        r5mobilsev=request.r5mobilsev,
+        r5uppermob=request.r5uppermob,
+        r5lowermob=request.r5lowermob,
+        r5fallnum=request.r5fallnum,
+        predicted_class=predicted_class, 
+        predicted_score=predicted_score,  
     )
-    database.add(new_survey)
+
+    database.add(new_patient)
     database.commit()
-    database.refresh(new_survey)
-    return new_survey
+    database.refresh(new_patient)
+    return new_patient

@@ -2,7 +2,6 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 from app.auth.jwt import get_current_user
-from app.model.schema import PredictResponse
 from fastapi import UploadFile
 from fastapi.testclient import TestClient
 from httpx import AsyncClient

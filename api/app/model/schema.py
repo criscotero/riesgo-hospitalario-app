@@ -26,8 +26,11 @@ class PredictRequest(BaseModel):
 
 
 
-class PredictResponse(BaseModel):
-    success: bool    
-    score: float
-    feedback:str
-    name:str
+class PredictResultResponse(BaseModel):
+    """
+    Response model for a patient's prediction result.
+    """
+    patient_id: int
+    predicted_class: int
+    predicted_score: float
+    redis_job_id: str

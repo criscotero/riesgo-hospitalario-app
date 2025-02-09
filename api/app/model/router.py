@@ -1,44 +1,50 @@
-from io import BytesIO
-import os
-from typing import List
-
-from app import db
-from app import settings 
-from app import utils
-from app.auth.jwt import get_current_user
-from app.model.schema import PredictRequest, PredictResponse
-from app.model.services import model_predict
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from . import dbStore
+from app import db
+from app.model.schema import PredictRequest, PredictResultResponse
+from app.model.services import model_predict
+from . import dbStore  # Local module
 
+# Initialize API Router
 router = APIRouter(tags=["Model"], prefix="/model")
 
 
-@router.post("/predict")
-async def predict(request: PredictRequest,database: Session = Depends(db.get_db),):
-    rpse = {"class": None,  "score": None}
- 
-    # Step 3: Process the file with the model service
-    try:
-        prediction = await model_predict(request)
-        rpse["class"] = prediction[0][0]     
-        rpse["score"] = prediction[0][1]
-      
-        #survey = PredictResponse(
-        #   success = rpse["success"],           
-        #   score = rpse["score"],
-        #   feedback = rpse["feedback"],
-        #   name="Javier"
-        #)
+@router.post("/predict", response_model=PredictResultResponse)
+async def predict(request: PredictRequest, database: Session = Depends(db.get_db)):
+    """
+    Handles patient prediction requests by:
+    1. Sending data to Redis for ML model processing.
+    2. Waiting for the prediction results.
+    3. Storing the patient record in the database.
 
-        # await dbStore.new_survey(survey,database)
+    Args:
+        request (PredictRequest): Patient details and medical parameters.
+        database (Session): Database session for committing data.
+
+    Returns:
+        PredictResultResponse: Structured response with patient ID and prediction details.
+    """
+
+    try:
+        # Step 1: Send the request to Redis and get the prediction results
+        predicted_class, predicted_score, job_id = await model_predict(request)
+
+        # Step 2: Save the patient record with predictions
+        new_patient = await dbStore.new_patient_prediction(
+            request, database, predicted_class, predicted_score, job_id=job_id
+        )
+
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error during prediction: {str(e)}",
         )
 
-    # Step 4: Return the response
-    return rpse
+    # Step 3: Return structured response using PredictResultResponse model
+    return PredictResultResponse(
+        patient_id=new_patient.id,
+        predicted_class=new_patient.predicted_class,
+        predicted_score=new_patient.predicted_score,
+        redis_job_id=new_patient.redis_job_id,
+    )

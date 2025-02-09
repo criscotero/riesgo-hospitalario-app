@@ -5,7 +5,7 @@ import uuid
 import redis
 from aioredis import Redis
 from .. import settings
-from app.model.schema import PredictRequest, PredictResponse
+from app.model.schema import PredictRequest
 # TODO
 # Connect to Redis and assign to variable `db``
 # Make use of settings.py module to get Redis settings like host, port, etc.
@@ -102,4 +102,4 @@ async def model_predict(predict_request: PredictRequest):
         # Ensure Redis connection is properly closed
         await redis.close()
 
-    return prediction, score
+    return prediction, score, job_id
