@@ -28,11 +28,13 @@ async def predict(request: PredictRequest, database: Session = Depends(db.get_db
 
     try:
         # Step 1: Send the request to Redis and get the prediction results
-        predicted_class, predicted_score, job_id = await model_predict(request)
+        prediction, error, job_id  = await model_predict(request)
+        predicted_class, predicted_score = prediction
+   
 
         # Step 2: Save the patient record with predictions
         new_patient = await dbStore.new_patient_prediction(
-            request, database, predicted_class, predicted_score, job_id=job_id
+            request, database, predicted_class, predicted_score
         )
 
     except Exception as e:
@@ -46,5 +48,5 @@ async def predict(request: PredictRequest, database: Session = Depends(db.get_db
         patient_id=new_patient.id,
         predicted_class=new_patient.predicted_class,
         predicted_score=new_patient.predicted_score,
-        redis_job_id=new_patient.redis_job_id,
+        
     )

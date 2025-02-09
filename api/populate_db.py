@@ -53,6 +53,11 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 Base.metadata.drop_all(engine)
 print("Tables dropped")
 
+# Create all tables
+Base.metadata.create_all(engine)
+print("Tables created")
+
+
 # Populate database with a default patient
 print("Populating database with default patient")
 Session = sessionmaker(bind=engine)
@@ -60,7 +65,7 @@ session = Session()
 
 
 patient = Patient(
-    redis_job_id="job_1234567890",
+    #redis_job_id="job_1234567890",
     first_name="John",
     last_name="Doe",
     identification="ABC123456",

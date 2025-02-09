@@ -33,4 +33,4 @@ class PredictResultResponse(BaseModel):
     patient_id: int
     predicted_class: int
     predicted_score: float
-    redis_job_id: str
+    #redis_job_id: str

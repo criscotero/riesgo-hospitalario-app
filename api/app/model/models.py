@@ -6,7 +6,7 @@ class Patient(Base):
     __tablename__ = "patients"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    redis_job_id = Column(String, nullable=True)
+    #redis_job_id = Column(String, nullable=True)
     first_name = Column(String, nullable=False)
     last_name = Column(String, nullable=False)
     identification = Column(String, unique=True, nullable=False)
@@ -29,10 +29,10 @@ class Patient(Base):
             self, first_name, last_name, identification, age, r5height, r5weight, 
             r5adla, r5adltot6, r5iadlfour, r5nagi8, r5grossa, r5mobilsev, 
             r5uppermob, r5lowermob, r5fallnum, predicted_class, predicted_score,
-            redis_job_id=None 
+            #redis_job_id=None 
             
         ):
-            self.redis_job_id = redis_job_id
+            #self.redis_job_id = redis_job_id
             self.first_name = first_name
             self.last_name = last_name
             self.identification = identification
@@ -50,4 +50,4 @@ class Patient(Base):
             self.r5fallnum = r5fallnum
             self.predicted_class = predicted_class
             self.predicted_score = predicted_score
-            self.redis_job_id = redis_job_id 
+            #self.redis_job_id = redis_job_id 

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from . import models, schema
 
 async def new_patient_prediction(
-     request: PredictRequest, database: Session, predicted_class: int, predicted_score: float, job_id: str
+     request: PredictRequest, database: Session, predicted_class: int, predicted_score: float
 ) -> models.Patient:
     """
     Adds a new patient record to the database and assigns a Redis job ID.
@@ -26,7 +26,7 @@ async def new_patient_prediction(
     """
     
     new_patient = models.Patient(
-        redis_job_id="job_1234567890",
+        #redis_job_id="job_1234567890",
         first_name=request.firstName,
         last_name=request.lastName,  
         identification=request.identification,
