@@ -18,20 +18,20 @@ router = APIRouter(tags=["Model"], prefix="/model")
 
 @router.post("/predict")
 async def predict(request: PredictRequest,database: Session = Depends(db.get_db),):
-    rpse = {"success": False,  "score": None, "feedback":None}
+    rpse = {"class": None,  "score": None}
  
     # Step 3: Process the file with the model service
     try:
-        prediction, score = await model_predict(request)
-        rpse["success"] = True      
-        rpse["score"] = prediction
-        rpse["feedback"] = "Take care of the dog"
-        survey = PredictResponse(
-           success = rpse["success"],           
-           score = rpse["score"],
-           feedback = rpse["feedback"],
-           name="Javier"
-        )
+        prediction = await model_predict(request)
+        rpse["class"] = prediction[0][0]     
+        rpse["score"] = prediction[0][1]
+      
+        #survey = PredictResponse(
+        #   success = rpse["success"],           
+        #   score = rpse["score"],
+        #   feedback = rpse["feedback"],
+        #   name="Javier"
+        #)
 
         # await dbStore.new_survey(survey,database)
     except Exception as e:
@@ -41,4 +41,4 @@ async def predict(request: PredictRequest,database: Session = Depends(db.get_db)
         )
 
     # Step 4: Return the response
-    return request.r5bmi
+    return rpse
