@@ -2,15 +2,26 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import HealthStatus from '../components/Stepper/healthStatus';
-import WealthStatus from '../components/Stepper/wealthStatus';
 import GeneralInformation from '../components/Stepper/generalInformation';
 import { useFormStore } from '../store/formStore';
 import Accident from '../components/Stepper/accident';
+import { useMutation } from '@tanstack/react-query';
+import { createPrediction } from '../services/prediction.service';
 
 export default function HospitalizationForm() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1);
-  const { formData, setFormData } = useFormStore();
+  const { formData, setFormData,clearFormData } = useFormStore();
+  
+  const { mutate, status, error } = useMutation({
+    mutationFn: createPrediction,
+    onSuccess: (data) => {
+      console.log('Mutation successful:', data);
+    },
+    onError: (error) => {
+      console.error('Mutation error:', error);
+    },
+  });
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -26,6 +37,7 @@ export default function HospitalizationForm() {
     };
     const submitted = () => {
       console.dir(formData)
+      mutate(formData);
       //router.push(`/score?score=70`);
     }
   const steps = [
