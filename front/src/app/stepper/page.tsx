@@ -18,6 +18,8 @@ export default function HospitalizationForm() {
     mutationFn: createPrediction,
     onSuccess: (data) => {
       console.log('Mutation successful:', data);
+      router.push(`/score?score=${data.predicted_score}&class=${data.predicted_class}`);
+    
     },
     onError: (error) => {
       console.error('Mutation error:', error);
