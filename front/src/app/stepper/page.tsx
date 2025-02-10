@@ -38,7 +38,7 @@ export default function HospitalizationForm() {
     const submitted = () => {
       console.dir(formData)
       mutate(formData);
-      //router.push(`/score?score=70`);
+      
     }
   const steps = [
     { id: 1, name: 'General Information', component: <GeneralInformation handleNext={handleNext} /> },
