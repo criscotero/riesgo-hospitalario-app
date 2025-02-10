@@ -4,7 +4,7 @@ interface Params {
   }
   
   const HealthScore = ({ score, classType}: Params) => {
-    const healthScore = Number(score) || 0;
+    const healthScore = Math.trunc(Number(score) * 100 || 0);
   
     // Determine the color based on className
     const getColor = (className: number) => {
