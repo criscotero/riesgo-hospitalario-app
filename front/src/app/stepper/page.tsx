@@ -7,13 +7,14 @@ import { useFormStore } from '../store/formStore';
 import Accident from '../components/Stepper/accident';
 import { useMutation } from '@tanstack/react-query';
 import { createPrediction } from '../services/prediction.service';
+import Spinner from '../components/spinner';
 
 export default function HospitalizationForm() {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState(1);
   const { formData, setFormData,clearFormData } = useFormStore();
   
-  const { mutate, status, error } = useMutation({
+  const { mutate, status, isPending } = useMutation({
     mutationFn: createPrediction,
     onSuccess: (data) => {
       console.log('Mutation successful:', data);
@@ -54,7 +55,7 @@ export default function HospitalizationForm() {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       {/* Single Form Container */}
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full">
+      <div className={`bg-white shadow-lg rounded-lg p-8 max-w-4xl w-full ${isPending ? 'blur-sm' : ''}`}>
         {/* Fixed Title */}
         <h1 className="text-2xl font-bold mb-6 text-center">
           Hospitalization Prediction Form 
@@ -95,6 +96,13 @@ export default function HospitalizationForm() {
 
      
       </div>
+  {/* Show spinner while submitting */}
+       {isPending && (
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <Spinner />
+        </div>
+      )}
+       
     </div>
   );
 }
