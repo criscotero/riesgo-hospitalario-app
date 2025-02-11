@@ -36,7 +36,7 @@ export default function Accident({ handleBack, submitted }:Props) {
 
         {/* Age */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Number of falls</label>
+          <label className="block text-sm font-medium text-gray-700">Number of falls in the last two years</label>
           <input
             {...register("r5fallnum", {
               required: "Number of falls is required",

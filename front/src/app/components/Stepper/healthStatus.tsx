@@ -37,9 +37,9 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
      
-      <div>
+     {/*  <div>
         <label className="block text-sm font-medium text-gray-700">
-          Self-report of health change
+          Self-report of health change in the last 12 months
         </label>
         <select
           {...register("healthChange", { required: "Health change is required" })}
@@ -54,12 +54,13 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
         {(errors.healthChange != null) && (
             <p className="text-red-500">{`${errors.healthChange.message}`}</p>
           )}
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      </div> */}
+ 
+      <div className="grid grid-cols-1 gap-4 mt-4">
+       
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            ADLs Difficulty
+           <b>ADLs Difficulty (Activities of Daily Living)</b> include: Bathing, Dressing, Eating, Toileting, Transferring (e.g., getting in/out of bed)
           </label>
           <select
             {...register("r5adla", { required: "ADL selection is required" })}
@@ -80,7 +81,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            ADLs (6 tasks)
+          <b>ADLs (6 tasks)</b> 1.Bathing 2.Dressing 3.Eating 4.Toileting (using the restroom) 5.Transferring 6.Continence (control over bladder/bowel function)
           </label>
           <select
             {...register("r5adltot6", { required: "ADL selection is required" })}
@@ -100,10 +101,10 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            IADLs Difficulty
+          <b>IADLs (Instrumental Activities of Daily Living)</b> 1.Managing medications 2.Shopping for groceries and essentials 3.Handling transportation 4.Managing finances (paying bills, budgeting)
           </label>
           <select
             {...register("r5iadlfour", { required: "IADL selection is required" })}
@@ -124,7 +125,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            NAGI Tasks Difficulty
+            <b>NAGI Tasks Difficulty</b> The NAGI Disability Scale assesses physical function limitations and includes: 1.Walking a short distance 2.Climbing stairs 3.Stooping, kneeling, or crouching 4.Lifting or carrying heavy objects 5.Reaching overhead 6.Pushing or pulling large objects 7.Standing for long periods 8.Sitting for long periods
           </label>
           <select
             {...register("r5nagi8", { required: "NAGI task selection is required" })}
@@ -144,10 +145,10 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Gross Motor Tasks Difficulty
+            <b>Gross Motor Tasks Difficulty </b>The Gross Motor Scale assesses major movement-related limitations.
           </label>
           <select
             {...register("r5grossa", { required: "Gross motor task selection is required" })}
@@ -168,7 +169,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Mobility Severity Difficulty
+            <b>Mobility Severity Difficulty</b> The 7-item Mobility Scale assesses difficulties in essential mobility functions.
           </label>
           <select
             {...register("r5mobilsev", { required: "Mobility severity selection is required" })}
@@ -188,10 +189,10 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Upper Body Mobility Difficulty
+            <b>Upper Body Mobility Difficulty</b> The Upper Body Mobility Scale assesses difficulties in upper body movement.
           </label>
           <select
             {...register("r5uppermob", { required: "Upper body mobility selection is required" })}
@@ -212,7 +213,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Lower Body Mobility Difficulty
+            <b>Lower Body Mobility Difficulty</b> The Lower Body Mobility Scale assesses difficulties in lower body movement.
           </label>
           <select
             {...register("r5lowermob", { required: "Lower body mobility selection is required" })}
