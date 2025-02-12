@@ -58,26 +58,6 @@ services:
       - shared_network
     command: find /src -name "*.py" | entr -r 'pkill -f ml_service.py || true && python3 -u /src/ml_service.py'
 
-
-  ui:
-    image: ml_ui
-    container_name: ml_ui
-    build:
-      context: ./ui
-      target: build
-    ports:
-      - "9090:9090"
-    depends_on:
-      - api
-    environment:
-      - API_HOST=api
-      - API_PORT=5000
-    volumes:
-      - ./ui:/src  # Mount local `ui` folder for hot reloading
-    command: streamlit run app/image_classifier_app.py --server.port 9090
-    networks:
-      - shared_network
-
   nextjs_ui:
     image: nextjs_ui
     container_name: nextjs_ui
