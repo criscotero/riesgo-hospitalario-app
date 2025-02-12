@@ -125,7 +125,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            <b>NAGI Tasks Difficulty</b> The NAGI Disability Scale assesses physical function limitations and includes: 1.Walking a short distance 2.Climbing stairs 3.Stooping, kneeling, or crouching 4.Lifting or carrying heavy objects 5.Reaching overhead 6.Pushing or pulling large objects 7.Standing for long periods 8.Sitting for long periods
+            <b>NAGI Tasks Difficulty</b> Assesses physical function limitations and includes (Lifting or carrying heavy objects,Pushing or pulling large objects,Standing for long periods,Sitting for long periods
           </label>
           <select
             {...register("r5nagi8", { required: "NAGI task selection is required" })}
@@ -148,7 +148,8 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
       <div className="grid grid-cols-1 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            <b>Gross Motor Tasks Difficulty </b>The Gross Motor Scale assesses major movement-related limitations.
+            <b>Gross Motor Tasks Difficulty </b>Assesses major movement-related limitations. (Walking,Running,Jumping,Balancing,Climbing stairs)
+)
           </label>
           <select
             {...register("r5grossa", { required: "Gross motor task selection is required" })}
@@ -169,7 +170,8 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            <b>Mobility Severity Difficulty</b> The 7-item Mobility Scale assesses difficulties in essential mobility functions.
+            <b>Mobility Severity Difficulty</b> Assesses difficulties in essential mobility functions.(Standing up from a chair
+Walking short or long distances,Climbing stairs,Moving around indoors and outdoors.)
           </label>
           <select
             {...register("r5mobilsev", { required: "Mobility severity selection is required" })}
@@ -192,7 +194,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
       <div className="grid grid-cols-1 gap-4 mt-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            <b>Upper Body Mobility Difficulty</b> The Upper Body Mobility Scale assesses difficulties in upper body movement.
+            <b>Upper Body Mobility Difficulty</b>Assesses difficulties in upper body movement.(Like arms, shoulders, and torso)
           </label>
           <select
             {...register("r5uppermob", { required: "Upper body mobility selection is required" })}
@@ -213,7 +215,7 @@ export default function HealthStatus({ handleBack, handleNext }: Props) {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            <b>Lower Body Mobility Difficulty</b> The Lower Body Mobility Scale assesses difficulties in lower body movement.
+            <b>Lower Body Mobility Difficulty</b> Assesses difficulties in lower body movement. (hips, legs, knees, and feet)
           </label>
           <select
             {...register("r5lowermob", { required: "Lower body mobility selection is required" })}
