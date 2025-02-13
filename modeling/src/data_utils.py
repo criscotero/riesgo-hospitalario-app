@@ -139,3 +139,6 @@ def compute_proportions(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     """
 
     return df[columns].apply(lambda col: col.value_counts(normalize=True, dropna=False))
+
+
+
